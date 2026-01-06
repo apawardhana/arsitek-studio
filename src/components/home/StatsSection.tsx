@@ -4,12 +4,15 @@ import { motion } from "framer-motion";
 import CountUp from "../animation/CountUp";
 import AnimatedLine from "../animation/AnimatedLine";
 
-const stats = [
-    { number: 25, suffix: "+", label: "Years of Experience" },
-    { number: 500, suffix: "+", label: "Projects Completed" },
-    { number: 50, suffix: "+", label: "Design Awards" },
-    { number: 100, suffix: "+", label: "Team Members" },
-];
+interface StatItem {
+    number: number;
+    suffix: string;
+    label: string;
+}
+
+interface StatsSectionProps {
+    initialStats?: StatItem[];
+}
 
 const containerVariants = {
     hidden: {},
@@ -27,12 +30,20 @@ const itemVariants = {
         y: 0,
         transition: {
             duration: 0.6,
-            ease: [0.25, 0.1, 0.25, 1],
+            ease: [0.25, 0.1, 0.25, 1] as any,
         },
     },
 };
 
-export default function StatsSection() {
+export default function StatsSection({ initialStats }: StatsSectionProps) {
+    const defaultStats = [
+        { number: 25, suffix: "+", label: "Years of Experience" },
+        { number: 500, suffix: "+", label: "Projects Completed" },
+        { number: 50, suffix: "+", label: "Design Awards" },
+        { number: 100, suffix: "+", label: "Team Members" },
+    ];
+
+    const stats = initialStats || defaultStats;
     return (
         <section className="py-16 lg:py-24 bg-accent-cream relative overflow-hidden">
             {/* Background decorative elements */}

@@ -43,7 +43,16 @@ const itemVariants = {
     },
 };
 
-export default function Footer() {
+interface FooterProps {
+    initialSettings?: any;
+}
+
+export default function Footer({ initialSettings }: FooterProps) {
+    const contactInfo = {
+        email: initialSettings?.email || "hello@arsitekstudio.com",
+        phone: initialSettings?.phone || "+62 889 7349 3507",
+        address: initialSettings?.address || "Jl. Sudirman No. 123\nJakarta Selatan, 12190\nIndonesia",
+    };
     return (
         <footer className="bg-background-dark text-foreground-light">
             {/* CTA Section */}
@@ -191,28 +200,24 @@ export default function Footer() {
                             <ul className="space-y-4 text-foreground-muted">
                                 <li>
                                     <motion.a
-                                        href="mailto:apaw.sugiri@gmail.com"
+                                        href={`mailto:${contactInfo.email}`}
                                         className="hover:text-foreground-light transition-colors inline-block"
                                         whileHover={{ x: 5 }}
                                     >
-                                        apaw.sugiri@gmail.com
+                                        {contactInfo.email}
                                     </motion.a>
                                 </li>
                                 <li>
                                     <motion.a
-                                        href="tel:+6288973493507"
+                                        href={`tel:${contactInfo.phone.replace(/\s+/g, '')}`}
                                         className="hover:text-foreground-light transition-colors inline-block"
                                         whileHover={{ x: 5 }}
                                     >
-                                        +62 889 7349 3507
+                                        {contactInfo.phone}
                                     </motion.a>
                                 </li>
-                                <li className="leading-relaxed">
-                                    Jl. Sudirman No. 123
-                                    <br />
-                                    Jakarta Selatan, 12190
-                                    <br />
-                                    Indonesia
+                                <li className="leading-relaxed whitespace-pre-wrap">
+                                    {contactInfo.address}
                                 </li>
                             </ul>
                         </FadeIn>

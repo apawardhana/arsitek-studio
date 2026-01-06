@@ -7,55 +7,35 @@ import AnimatedText from "../animation/AnimatedText";
 import FadeIn from "../animation/FadeIn";
 
 // Sample featured projects - akan diganti dengan data dari Sanity CMS
-const featuredProjects = [
-    {
-        id: 1,
-        title: "Minimalist Beach House",
-        category: "Architecture",
-        location: "Bali, Indonesia",
-        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
-        slug: "minimalist-beach-house",
-    },
-    {
-        id: 2,
-        title: "Modern Office Complex",
-        category: "Commercial",
-        location: "Jakarta, Indonesia",
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-        slug: "modern-office-complex",
-    },
-    {
-        id: 3,
-        title: "Luxury Penthouse",
-        category: "Interior",
-        location: "Singapore",
-        image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
-        slug: "luxury-penthouse",
-    },
-    {
-        id: 4,
-        title: "Eco Resort",
-        category: "Landscape",
-        location: "Lombok, Indonesia",
-        image: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80",
-        slug: "eco-resort",
-    },
-];
+interface Project {
+    id: string;
+    title: string;
+    category: string;
+    location: string | null;
+    coverImage: string;
+    slug: string;
+}
 
-const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (delay: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.8,
-            delay,
-            ease: [0.25, 0.1, 0.25, 1],
-        },
-    }),
-};
+interface FeaturedProjectsProps {
+    initialProjects?: Project[];
+}
 
-export default function FeaturedProjects() {
+export default function FeaturedProjects({ initialProjects }: FeaturedProjectsProps) {
+    const projects = initialProjects?.length ? initialProjects : [];
+
+    const cardVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: (delay: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.8,
+                delay,
+                ease: [0.25, 0.1, 0.25, 1] as any,
+            },
+        }),
+    };
+
     return (
         <section className="section-padding bg-background-dark">
             <div className="container-custom">
@@ -102,7 +82,7 @@ export default function FeaturedProjects() {
 
                 {/* Projects Grid - 2 columns layout */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    {featuredProjects.map((project, index) => (
+                    {projects.map((project, index) => (
                         <motion.div
                             key={project.id}
                             variants={cardVariants}
@@ -124,7 +104,7 @@ export default function FeaturedProjects() {
                                         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
                                     >
                                         <Image
-                                            src={project.image}
+                                            src={project.coverImage}
                                             alt={project.title}
                                             fill
                                             className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"

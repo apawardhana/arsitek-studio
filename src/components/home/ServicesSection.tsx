@@ -5,47 +5,58 @@ import AnimatedText from "../animation/AnimatedText";
 import FadeIn from "../animation/FadeIn";
 import AnimatedLine from "../animation/AnimatedLine";
 
-const services = [
-    {
-        number: "01",
-        title: "Architecture",
-        description:
-            "Creating innovative architectural designs that blend aesthetics with functionality, from concept to completion.",
-    },
-    {
-        number: "02",
-        title: "Interior Design",
-        description:
-            "Transforming spaces into inspiring environments that reflect your personality and enhance daily living.",
-    },
-    {
-        number: "03",
-        title: "Landscape",
-        description:
-            "Designing outdoor spaces that harmonize with nature and create sustainable, beautiful environments.",
-    },
-    {
-        number: "04",
-        title: "Engineering",
-        description:
-            "Delivering structural and MEP engineering solutions that ensure safety, efficiency, and sustainability.",
-    },
-];
+interface Service {
+    number: string;
+    title: string;
+    description: string;
+}
 
-const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (delay: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.6,
-            delay,
-            ease: [0.25, 0.1, 0.25, 1],
+interface ServicesSectionProps {
+    initialServices?: Service[];
+}
+
+export default function ServicesSection({ initialServices }: ServicesSectionProps) {
+    const defaultServices = [
+        {
+            number: "01",
+            title: "Architecture",
+            description:
+                "Creating innovative architectural designs that blend aesthetics with functionality, from concept to completion.",
         },
-    }),
-};
+        {
+            number: "02",
+            title: "Interior Design",
+            description:
+                "Transforming spaces into inspiring environments that reflect your personality and enhance daily living.",
+        },
+        {
+            number: "03",
+            title: "Landscape",
+            description:
+                "Designing outdoor spaces that harmonize with nature and create sustainable, beautiful environments.",
+        },
+        {
+            number: "04",
+            title: "Engineering",
+            description:
+                "Delivering structural and MEP engineering solutions that ensure safety, efficiency, and sustainability.",
+        },
+    ];
 
-export default function ServicesSection() {
+    const services = initialServices?.length ? initialServices : defaultServices;
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: (delay: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.6,
+                delay,
+                ease: [0.25, 0.1, 0.25, 1] as any,
+            },
+        }),
+    };
     return (
         <section className="section-padding bg-background">
             <div className="container-custom">
